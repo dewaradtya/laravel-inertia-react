@@ -1,0 +1,51 @@
+import React from 'react';
+import { Link } from '@inertiajs/react';
+
+export default function Sidebar() {
+  return (
+    <aside className="h-screen w-64 bg-purple-600 text-white border-r rounded-3xl border-blue-200 shadow-lg m-4">
+      <div className="pt-8">
+        <h1 className="text-2xl italic font-bold text-center mb-8">Mantoel Sam</h1>
+        <nav>
+          <ul className="space-y-4  mx-2">
+            <li className="px-4 py-2 bg-purple-400 rounded-xl">
+              <Link 
+                href="/" 
+                className="flex items-center space-x-2"
+              >
+                <span className="material-icons">home</span>
+                <span className="text-x font-semibold">Dashboard</span>
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                href="/siswa" 
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+              >
+                <span className="material-icons">person</span>
+                <span className="text-x font-semibold">Siswa</span>
+              </Link>
+            </li>
+            
+            <li>
+              <Link 
+                href="/contact" 
+                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+              >
+                <span className="material-icons">contact_mail</span>
+                <span className="text-x font-semibold">Contact</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+        
+        <div className="mt-52 p-4 bg-purple-400 rounded-xl">
+          <h2 className="text-x font-semibold mb-2">Profile</h2>
+          <p className="text-sm">Mantoel Sam is Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum, possimus.</p>
+          <Link href="/profile" className="text-sm font-semibold mt-2 hover:underline">View Profile</Link>
+        </div>
+      </div>
+    </aside>
+  );
+}

@@ -13,7 +13,7 @@ export default function Table({ siswa, meta }) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white rounded-3xl shadow-md">
-        <thead className="bg-purple-600 text-white">
+        <thead className="bg-gray-600 text-white">
           <tr>
             <th className="py-3 px-4 text-left">No</th>
             <th className="py-3 px-4 text-left">Nis</th>

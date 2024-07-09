@@ -1,8 +1,34 @@
 import React from 'react';
 import Layout from '../Layouts/Layout';
 import { Head } from '@inertiajs/react';
+import { Line } from 'react-chartjs-2';
+import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
 
 export default function Dashboard() {
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Monthly Revenue',
+        data: [12000, 15000, 13000, 17000, 18000, 20000, 21000],
+        fill: false,
+        backgroundColor: 'rgb(75, 192, 192)',
+        borderColor: 'rgba(75, 192, 192, 0.2)',
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
   return (
     <Layout>
       <Head title="Dashboard" />
@@ -24,6 +50,10 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold text-gray-800 mb-2">Visits Today</h2>
             <p className="text-3xl font-bold text-purple-600">1,234</p>
           </div>
+        </div>
+        <div className="bg-white rounded-lg shadow-md p-6 mt-6">
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Monthly Revenue</h2>
+          <Line data={data} options={options} />
         </div>
       </div>
     </Layout>

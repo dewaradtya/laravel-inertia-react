@@ -21,7 +21,6 @@ class SiswaController extends Controller
         ]);
     }
 
-
     /**
      * Show the form for creating a new resource.
      */
@@ -38,26 +37,22 @@ class SiswaController extends Controller
         $validator = Validator::make($request->all(), [
             'nis' => 'required|unique:siswa,nis',
             'nama' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+            'alamat' => 'required',
+            'asal_sekolah' => 'required',
+            'no_telp' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Siswa::create([
-            'nis' => $request->nis,
-            'nama' => $request->nama,
-        ]);
+        Siswa::create($request->all());
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -76,16 +71,24 @@ class SiswaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'nis' => 'required|string',
+        $validator = Validator::make($request->all(), [
+            'nis' => 'required|string|unique:siswa,nis,' . $id,
             'nama' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|string',
+            'agama' => 'required|string',
+            'alamat' => 'required|string',
+            'asal_sekolah' => 'required|string',
+            'no_telp' => 'required|numeric',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
         $siswa = Siswa::findOrFail($id);
-        $siswa->update([
-            'nis' => $request->nis,
-            'nama' => $request->nama,
-        ]);
+        $siswa->update($request->all());
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diperbarui!');
     }

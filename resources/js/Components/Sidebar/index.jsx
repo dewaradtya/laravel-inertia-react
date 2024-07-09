@@ -7,7 +7,7 @@ export default function Sidebar() {
       <div className="pt-8">
         <h1 className="text-2xl italic font-bold text-center mb-8">Mantoel Sam</h1>
         <nav>
-          <ul className="space-y-4  mx-2">
+          <ul className="space-y-2 mx-2">
             <li className="px-4 py-2 bg-purple-400 rounded-xl">
               <Link 
                 href="/" 

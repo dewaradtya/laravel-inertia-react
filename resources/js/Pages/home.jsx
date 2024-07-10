@@ -1,13 +1,14 @@
 import React from 'react';
 import Layout from '../Layouts/Layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-
 export default function Dashboard() {
+  const { totalUsers, visitsToday } = usePage().props;
+
   const data = {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
     datasets: [
@@ -38,7 +39,7 @@ export default function Dashboard() {
           {/* Card 1 */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-2">Total Users</h2>
-            <p className="text-3xl font-bold text-blue-600">256</p>
+            <p className="text-3xl font-bold text-blue-600">{totalUsers}</p>
           </div>
           {/* Card 2 */}
           <div className="bg-white rounded-lg shadow-md p-6">
@@ -48,7 +49,7 @@ export default function Dashboard() {
           {/* Card 3 */}
           <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="text-lg font-semibold text-gray-800 mb-2">Visits Today</h2>
-            <p className="text-3xl font-bold text-purple-600">1,234</p>
+            <p className="text-3xl font-bold text-purple-600">{visitsToday}</p>
           </div>
         </div>
         <div className="bg-white rounded-lg shadow-md p-6 mt-6">

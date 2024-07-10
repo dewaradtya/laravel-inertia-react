@@ -1,7 +1,9 @@
 import React from "react";
-import { Link, router } from "@inertiajs/react";
+import { Link, usePage, router } from "@inertiajs/react";
 
 export default function Sidebar() {
+    const { auth } = usePage().props;
+
     const handleLogout = (e) => {
         e.preventDefault();
         router.post('/logout', {}, {
@@ -31,17 +33,19 @@ export default function Sidebar() {
                             </Link>
                         </li>
 
-                        <li>
-                            <Link
-                                href="/siswa"
-                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
-                            >
-                                <span className="material-icons">person</span>
-                                <span className="font-semibold">
-                                    Siswa
-                                </span>
-                            </Link>
-                        </li>
+                        {(auth.user && (auth.user.role === 'pengajar' || auth.user.role === 'admin')) && (
+                            <li>
+                                <Link
+                                    href="/siswa"
+                                    className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                                >
+                                    <span className="material-icons">person</span>
+                                    <span className="font-semibold">
+                                        Siswa
+                                    </span>
+                                </Link>
+                            </li>
+                        )}
 
                         <li>
                             <Link

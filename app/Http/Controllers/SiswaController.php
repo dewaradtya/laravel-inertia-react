@@ -17,7 +17,11 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::paginate(10);
         return Inertia::render('Siswa/index', [
-            'siswa' => $siswa
+            'siswa' => $siswa,
+            'flash' => [
+                'success' => session('success'),
+                'error' => session('error'),
+            ],
         ]);
     }
 

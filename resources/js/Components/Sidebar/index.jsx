@@ -1,7 +1,16 @@
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, router } from "@inertiajs/react";
 
 export default function Sidebar() {
+    const handleLogout = (e) => {
+        e.preventDefault();
+        router.post('/logout', {}, {
+            onSuccess: () => {
+                console.log("Successfully logged out!");
+            }
+        });
+    };
+
     return (
         <aside className="h-screen w-64 bg-purple-600 text-white border-r rounded-3xl border-blue-200 shadow-lg m-4">
             <div className="pt-8">
@@ -16,7 +25,7 @@ export default function Sidebar() {
                                 className="flex items-center space-x-2"
                             >
                                 <span className="material-icons">home</span>
-                                <span className="text-x font-semibold">
+                                <span className="font-semibold">
                                     Dashboard
                                 </span>
                             </Link>
@@ -28,7 +37,7 @@ export default function Sidebar() {
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
                             >
                                 <span className="material-icons">person</span>
-                                <span className="text-x font-semibold">
+                                <span className="font-semibold">
                                     Siswa
                                 </span>
                             </Link>
@@ -42,14 +51,14 @@ export default function Sidebar() {
                                 <span className="material-icons">
                                     contact_mail
                                 </span>
-                                <span className="text-x font-semibold">
+                                <span className="font-semibold">
                                     Contact
                                 </span>
                             </Link>
                         </li>
                     </ul>
                     <div className="mt-44 p-4 bg-purple-400 rounded-xl">
-                        <h2 className="text-x font-semibold mb-2">About</h2>
+                        <h2 className="font-semibold mb-2">About</h2>
                         <p className="text-sm">
                             Mantoel Sam is Lorem ipsum dolor sit amet
                             consectetur adipisicing elit. Earum, possimus.
@@ -61,15 +70,13 @@ export default function Sidebar() {
                             View Profile
                         </Link>
                     </div>
-                    <div className="p-4 bg-red-400 hover:bg-red-500 rounded-xl m-2">
-                        <Link
-                            href="/profile"
-                            className="flex items-center space-x-2 text-sm font-semibold"
-                        >
-                            <span className="material-icons">logout</span>
-                            <span className="text-x font-semibold">Logout</span>
-                        </Link>
-                    </div>
+                    <button
+                        onClick={handleLogout}
+                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-2 flex items-center space-x-2 text-sm font-semibold"
+                    >
+                        <span className="material-icons">logout</span>
+                        <span className="font-semibold">Logout</span>
+                    </button>
                 </nav>
             </div>
         </aside>

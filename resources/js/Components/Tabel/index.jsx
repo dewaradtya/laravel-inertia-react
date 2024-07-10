@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, router } from "@inertiajs/react";
 import Pagination from "../Pagination/index";
-import EditModal from "../Modal/index";
+import Edit from "../../Pages/Siswa/edit";
 
 export default function Table({ siswa, meta }) {
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedSiswa, setSelectedSiswa] = useState(null);
+
   const handleDelete = (id) => {
     if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
       router.delete(`/siswa/${id}`);
     }
+  };
+
+  const handleEditClick = (siswa) => {
+    setSelectedSiswa(siswa);
+    setShowEditModal(true);
   };
 
   return (
@@ -35,7 +43,12 @@ export default function Table({ siswa, meta }) {
               <td className="py-3 px-4">{s.nis}</td>
               <td className="py-3 px-4">{s.nama}</td>
               <td className="py-3 px-4">
-                <EditModal siswa={s} />
+                <button
+                  onClick={() => handleEditClick(s)}
+                  className="text-blue-600 hover:text-blue-700 mr-2"
+                >
+                  Edit
+                </button>
                 <button
                   onClick={() => handleDelete(s.id)}
                   className="text-red-600 hover:text-red-700 ml-2"
@@ -51,6 +64,10 @@ export default function Table({ siswa, meta }) {
       <div className="mt-4">
         <Pagination meta={meta} />
       </div>
+
+      {showEditModal && selectedSiswa && (
+        <Edit siswa={selectedSiswa} showModal={showEditModal} setShowModal={setShowEditModal} />
+      )}
     </div>
   );
 }

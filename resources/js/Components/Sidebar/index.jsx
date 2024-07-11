@@ -23,7 +23,7 @@ export default function Sidebar() {
                     <ul className="space-y-2 mx-2">
                         <li className="px-4 py-2 bg-purple-400 hover:bg-purple-300 rounded-xl">
                             <Link
-                                href="/"
+                                href="/dashboard"
                                 className="flex items-center space-x-2"
                             >
                                 <span className="material-icons">home</span>

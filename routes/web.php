@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('home');
+    return Inertia::render('Auth/Login');
 });
 
 Route::get('/register', [AuthController::class, 'register'])->name('register');
@@ -19,4 +20,5 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
     Route::resource('siswa', SiswaController::class)->middleware('userAkses:pengajar');
+    Route::resource('profile', ProfileController::class);
 });

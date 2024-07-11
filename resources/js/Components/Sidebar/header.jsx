@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
+import Modal from "../../Components/Modal/index";
+import Profile from "../../Pages/Auth/Profile";
 
 export default function Header() {
     const { auth } = usePage().props;
     const [greeting, setGreeting] = useState("");
+    const [showProfileModal, setShowProfileModal] = useState(false);
 
     useEffect(() => {
         const hours = new Date().getHours();
@@ -32,8 +35,8 @@ export default function Header() {
                         </span>
                     )}
                 </div>
-                <Link
-                    href="/profile"
+                <button
+                    onClick={() => setShowProfileModal(true)}
                     className="font-semibold hover:text-gray-300 transition duration-200 flex items-center space-x-2"
                 >
                     <img
@@ -42,8 +45,15 @@ export default function Header() {
                         className="w-8 h-8 rounded-full"
                     />
                     <span>Profile</span>
-                </Link>
+                </button>
             </div>
+            <Modal
+                title="Profile"
+                showModal={showProfileModal}
+                setShowModal={setShowProfileModal}
+            >
+                {auth?.user && <Profile user={auth.user} />}
+            </Modal>
         </header>
     );
 }

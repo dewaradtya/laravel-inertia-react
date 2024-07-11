@@ -33,16 +33,16 @@ export default function FlashMessage() {
                 <>
                     {flash.success && (
                         <div className="px-4 py-2 rounded-md shadow-md mb-4 flex items-center">
-                            <span className="material-icons mr-2 text-white rounded-full p-1 bg-green-500">
+                            <span className="material-icons mr-2 text-white rounded-full bg-green-500">
                                 done
                             </span>
                             {flash.success}
                         </div>
                     )}
                     {flash.error && (
-                        <div className="px-4 py-2 rounded-md shadow-md mb-4">
-                            <span className="material-icons mr-2 text-white rounded-full p-1 bg-red-500">
-                                false
+                        <div className="px-4 py-2 bg-red-500 text-white rounded-md shadow-md mb-4 flex items-center">
+                            <span className="material-icons mr-2 text-red-500 rounded-full bg-white">
+                                close
                             </span>
                             {flash.error}
                         </div>

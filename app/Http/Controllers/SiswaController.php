@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\SiswaExport;
+use App\Imports\SiswaImport;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SiswaController extends Controller
 {
@@ -105,6 +108,32 @@ class SiswaController extends Controller
             return Redirect::route('siswa.index')->with('success', 'Data siswa berhasil dihapus.');
         } else {
             return Redirect::route('siswa.index')->with('error', 'Data siswa tidak ditemukan.');
+        }
+    }
+
+    public function downloadFormat()
+    {
+        return Excel::download(new SiswaExport, 'Siswa.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        try {
+            Excel::import(new SiswaImport, $request->file('file'));
+            return Redirect::back()->with('success', 'Data siswa berhasil diimport.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $errorMessages[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+            return Redirect::back()->with('error', 'Kesalahan saat mengimport data: ' . implode('. ', $errorMessages));
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', 'Terjadi kesalahan saat mengimport data: ' . $e->getMessage());
         }
     }
 }

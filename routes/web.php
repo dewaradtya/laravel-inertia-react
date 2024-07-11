@@ -1,11 +1,13 @@
 <?php
 
+use App\Exports\SiswaExport;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::get('/', function () {
     return Inertia::render('Auth/Login');
@@ -21,4 +23,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
     Route::resource('siswa', SiswaController::class)->middleware('userAkses:pengajar');
     Route::resource('profile', ProfileController::class);
+    Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');
+    Route::post('/siswa-import', [SiswaController::class, 'import'])->name('siswa.import');
 });

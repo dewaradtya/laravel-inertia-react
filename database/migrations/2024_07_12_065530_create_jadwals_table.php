@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('jadwals', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
             $table->string('kelas');
-            $table->date('tanggal_lahir');
-            $table->string('alamat');
-            $table->string('no_telp');
-            $table->string('foto')->nullable();
+            $table->string('mapel');
+            $table->integer('guru_id');
+            $table->enum('hari', ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']);
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('jadwals');
     }
 };

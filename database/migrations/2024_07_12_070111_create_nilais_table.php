@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('siswa', function (Blueprint $table) {
+        Schema::create('nilais', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama');
-            $table->string('kelas');
-            $table->date('tanggal_lahir');
-            $table->string('alamat');
-            $table->string('no_telp');
-            $table->string('foto')->nullable();
+            $table->integer('siswa_id');
+            $table->string('mapel');
+            $table->integer('nilai');
+            $table->date('tanggal');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('siswa');
+        Schema::dropIfExists('nilais');
     }
 };

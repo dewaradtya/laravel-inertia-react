@@ -11,14 +11,13 @@ class SiswaExport implements FromCollection, WithHeadings, WithTitle
 {
     public function collection()
     {
-        return Siswa::select('nis', 'nama')
-            ->groupBy('nis','nama')
+        return Siswa::select('nama', 'kelas', 'alamat', 'tanggal_lahir', 'no_telp', 'foto')
             ->get();
     }
 
     public function headings(): array
     {
-        return ['NIS', 'Nama'];
+        return ['Nama', 'Kelas', 'Alamat', 'Tanggal Lahir', 'No. Telp', 'Foto'];
     }
 
     public function title(): string

@@ -7,6 +7,7 @@ use App\Imports\SiswaImport;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
@@ -42,18 +43,27 @@ class SiswaController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nis' => 'required|unique:siswa,nis',
-            'nama' => 'required',
+            'nama' => 'required|string|max:255',
+            'kelas' => 'required|string|max:10',
+            'alamat' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'no_telp' => 'required|string|max:15',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Siswa::create([
-            'nis' => $request->nis,
-            'nama' => $request->nama,
-        ]);
+        $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $path = $file->store('images/siswa', 'public');
+            $data['foto'] = $path;
+        }
+
+        Siswa::create($data);
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil ditambahkan.');
     }
@@ -83,15 +93,24 @@ class SiswaController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            'nis' => 'required|string',
-            'nama' => 'required|string',
+            'nama' => 'required|string|max:255',
+            'kelas' => 'required|string|max:10',
+            'alamat' => 'required|string|max:255',
+            'tanggal_lahir' => 'required|date',
+            'no_telp' => 'required|string|max:15',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        $data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $path = $file->store('images/siswa', 'public');
+            $data['foto'] = $path;
+        }
+
         $siswa = Siswa::findOrFail($id);
-        $siswa->update([
-            'nis' => $request->nis,
-            'nama' => $request->nama,
-        ]);
+        $siswa->update($data);
 
         return redirect()->route('siswa.index')->with('success', 'Data siswa berhasil diperbarui!');
     }
@@ -104,6 +123,9 @@ class SiswaController extends Controller
         $siswa = Siswa::find($id);
 
         if ($siswa) {
+            if ($siswa->foto) {
+                Storage::disk('public')->delete($siswa->foto);
+            }
             $siswa->delete();
             return Redirect::route('siswa.index')->with('success', 'Data siswa berhasil dihapus.');
         } else {

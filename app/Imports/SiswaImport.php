@@ -7,6 +7,7 @@ use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\Importable;
+use Carbon\Carbon;
 
 class SiswaImport implements ToModel, WithHeadingRow, WithValidation
 {
@@ -15,25 +16,38 @@ class SiswaImport implements ToModel, WithHeadingRow, WithValidation
     public function model(array $row)
     {
         return new Siswa([
-            'nis' => $row['nis'],
             'nama' => $row['nama'],
+            'kelas' => $row['kelas'],
+            'alamat' => $row['alamat'],
+            'tanggal_lahir' => $row['tanggal_lahir'],
+            'no_telp' => $row['no_telp'],
+            'foto' => $row['foto'],
         ]);
     }
 
     public function rules(): array
     {
         return [
-            'nis' => 'required|unique:siswa,nis',
             'nama' => 'required',
+            'kelas' => 'required',
+            'alamat' => 'required',
+            'tanggal_lahir' => 'required|date',
+            'no_telp' => 'required',
+            'foto' => 'nullable|image|max:2048',
         ];
     }
 
     public function customValidationMessages()
     {
         return [
-            'nis.required' => 'Kolom NIS harus diisi.',
-            'nis.unique' => 'NIS :input sudah ada.',
             'nama.required' => 'Kolom Nama harus diisi.',
+            'kelas.required' => 'Kolom Kelas harus diisi.',
+            'alamat.required' => 'Kolom Alamat harus diisi.',
+            'tanggal_lahir.required' => 'Kolom Tanggal Lahir harus diisi.',
+            'tanggal_lahir.date_format' => 'Kolom Tanggal Lahir harus dalam format dd/mm/yyyy.',
+            'no_telp.required' => 'Kolom No. Telp harus diisi.',
+            'foto.image' => 'Kolom Foto harus berupa gambar.',
+            'foto.max' => 'Ukuran Foto maksimal adalah 2MB.',
         ];
     }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export function TextInput({ id, label, name, value, onChange, error, placeholder }) {
+export function TextInput({ id, label, name, value, onChange, error, placeholder, type = "text" }) {
     return (
         <div className="mb-4">
             <label htmlFor={id} className="block text-sm font-medium text-gray-700">
@@ -8,7 +8,7 @@ export function TextInput({ id, label, name, value, onChange, error, placeholder
             </label>
             <input
                 id={id}
-                type="text"
+                type={type}
                 name={name}
                 value={value}
                 onChange={onChange}
@@ -24,7 +24,7 @@ export function TextInput({ id, label, name, value, onChange, error, placeholder
 
 export function FileInput({ id, label, name, onChange, error }) {
     return (
-        <div>
+        <div className="mb-4">
             <label htmlFor={id} className="block text-sm font-medium text-gray-700">
                 {label}
             </label>

@@ -24,15 +24,19 @@ export default function Table({ siswa, meta }) {
         <thead className="bg-gray-600 text-white">
           <tr>
             <th className="py-3 px-4 text-left">No</th>
-            <th className="py-3 px-4 text-left">Nis</th>
             <th className="py-3 px-4 text-left">Nama</th>
+            <th className="py-3 px-4 text-left">Kelas</th>
+            <th className="py-3 px-4 text-left">Alamat</th>
+            <th className="py-3 px-4 text-left">Tanggal Lahir</th>
+            <th className="py-3 px-4 text-left">No. Telp</th>
+            <th className="py-3 px-4 text-left">Foto</th>
             <th className="py-3 px-4 text-left">Action</th>
           </tr>
         </thead>
         <tbody>
           {siswa.data.length === 0 && (
             <tr>
-              <td colSpan={5} className="font-bold text-center py-3 px-4">
+              <td colSpan={8} className="font-bold text-center py-3 px-4">
                 Tidak ada data.
               </td>
             </tr>
@@ -40,8 +44,18 @@ export default function Table({ siswa, meta }) {
           {siswa.data.map((s, index) => (
             <tr key={s.id} className="border-t border-gray-300">
               <td className="py-3 px-4">{index + 1}</td>
-              <td className="py-3 px-4">{s.nis}</td>
               <td className="py-3 px-4">{s.nama}</td>
+              <td className="py-3 px-4">{s.kelas}</td>
+              <td className="py-3 px-4">{s.alamat}</td>
+              <td className="py-3 px-4">{s.tanggal_lahir}</td>
+              <td className="py-3 px-4">{s.no_telp}</td>
+              <td className="py-3 px-4">
+                <img
+                  src={s.foto ? `http://localhost:8000/storage/${s.foto}` : "/img/default.jpg"}
+                  alt={s.nama}
+                  className="w-10 h-10 object-cover rounded-full"
+                />
+              </td>
               <td className="py-3 px-4">
                 <button
                   onClick={() => handleEditClick(s)}

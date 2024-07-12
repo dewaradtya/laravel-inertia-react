@@ -13,7 +13,12 @@ class Siswa extends Model
 
     protected $fillable = [
         'nama',
-        'nis',
+        'kelas',
+        'alamat',
+        'tanggal_lahir',
+        'alamat',
+        'no_telp',
+        'foto'
     ];
 
     protected $timestaps = false;

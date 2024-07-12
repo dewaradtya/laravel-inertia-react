@@ -41,7 +41,16 @@ export default function Sidebar() {
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
                             >
                                 <span className="material-icons">person</span>
-                                <span className="font-semibold">Siswa</span>
+                                <span className="font-semibold">Manajemen Siswa</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link
+                                href="/guru"
+                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                            >
+                                <span className="material-icons">person</span>
+                                <span className="font-semibold">Manajemen Guru</span>
                             </Link>
                         </li>
 

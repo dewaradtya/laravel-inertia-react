@@ -2,6 +2,7 @@
 
 use App\Exports\SiswaExport;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\GuruController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
@@ -23,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
     Route::resource('siswa', SiswaController::class);
     Route::resource('profile', ProfileController::class);
+    Route::resource('guru', GuruController::class);
     Route::resource('profile', ProfileController::class)->except('index, destroy');
     Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin');
     Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');

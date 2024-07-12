@@ -1,24 +1,32 @@
 import React from "react";
-import Layout from "../../Layouts/Layout";
-import { Head, useForm } from "@inertiajs/react";
+import { useForm } from "@inertiajs/react";
+import Modal from '../../Components/Modal';
 import { TextInput, FileInput } from '../../Components/Input/InputForm';
 import FormButtons from '../../Components/Button';
 
-export default function CreateSiswa() {
-    const { data, setData, post, errors } = useForm({
-        nama: "",
-        kelas: "",
-        alamat: "",
-        tanggal_lahir: "",
-        no_telp: "",
+const Edit = ({ guru, showModal, setShowModal }) => {
+    const { data, setData, put, errors } = useForm({
+        nama: guru.nama,
+        mapel: guru.mapel,
+        alamat: guru.alamat,
+        tanggal_lahir: guru.tanggal_lahir,
+        no_telp: guru.no_telp,
+        email: guru.email,
         foto: null,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/siswa", {
+
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            formData.append(key, data[key]);
+        });
+
+        put(`/guru/${guru.id}`, formData, {
             onSuccess: () => {
-                console.log("Data berhasil disimpan!");
+                console.log("Data berhasil diperbarui!");
+                setShowModal(false);
             },
         });
     };
@@ -29,14 +37,14 @@ export default function CreateSiswa() {
     };
 
     const handleFileChange = (e) => {
-        setData(e.target.name, e.target.files[0]);
+        const { name, files } = e.target;
+        setData(name, files[0]);
     };
+    
 
     return (
-        <Layout>
-            <Head title="Tambah Siswa" />
-            <div className="container mx-auto border w-full bg-gray-300 rounded-3xl p-4">
-                <h1 className="font-bold text-3xl mb-4">Tambah Data</h1>
+        <Modal title="Edit guru" showModal={showModal} setShowModal={setShowModal}>
+            <Modal.Body>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
                     <TextInput
                         id="nama"
@@ -47,12 +55,12 @@ export default function CreateSiswa() {
                         error={errors.nama}
                     />
                     <TextInput
-                        id="kelas"
-                        label="Kelas"
-                        name="kelas"
-                        value={data.kelas}
+                        id="mapel"
+                        label="Mapel"
+                        name="mapel"
+                        value={data.mapel}
                         onChange={handleChange}
-                        error={errors.kelas}
+                        error={errors.mapel}
                     />
                     <TextInput
                         id="alamat"
@@ -66,18 +74,27 @@ export default function CreateSiswa() {
                         id="tanggal_lahir"
                         label="Tanggal Lahir"
                         name="tanggal_lahir"
-                        type="date"
                         value={data.tanggal_lahir}
                         onChange={handleChange}
                         error={errors.tanggal_lahir}
+                        placeholder="YYYY-MM-DD"
                     />
                     <TextInput
                         id="no_telp"
-                        label="No Telepon"
+                        label="No. Telp"
                         name="no_telp"
                         value={data.no_telp}
                         onChange={handleChange}
                         error={errors.no_telp}
+                    />
+                    <TextInput
+                        id="email"
+                        label="Email"
+                        name="email"
+                        type="email"
+                        value={data.email}
+                        onChange={handleChange}
+                        error={errors.email}
                     />
                     <FileInput
                         id="foto"
@@ -87,13 +104,15 @@ export default function CreateSiswa() {
                         error={errors.foto}
                     />
                     <FormButtons
-                        saveLabel="Simpan"
-                        cancelLabel="Cancel"
-                        saveAction={handleSubmit}
-                        cancelLink="/siswa"
+                        saveLabel="Simpan" 
+                        cancelLabel="Batal" 
+                        saveAction={handleSubmit} 
+                        cancelLink="#" 
                     />
                 </form>
-            </div>
-        </Layout>
+            </Modal.Body>
+        </Modal>
     );
-}
+};
+
+export default Edit;

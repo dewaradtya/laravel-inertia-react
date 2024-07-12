@@ -7,16 +7,17 @@ import FormButtons from '../../Components/Button';
 export default function CreateSiswa() {
     const { data, setData, post, errors } = useForm({
         nama: "",
-        kelas: "",
-        alamat: "",
+        mapel: "",
         tanggal_lahir: "",
+        alamat: "",
         no_telp: "",
+        email: "",
         foto: null,
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post("/siswa", {
+        post("/guru", {
             onSuccess: () => {
                 console.log("Data berhasil disimpan!");
             },
@@ -34,7 +35,7 @@ export default function CreateSiswa() {
 
     return (
         <Layout>
-            <Head title="Tambah Siswa" />
+            <Head title="Tambah Guru" />
             <div className="container mx-auto border w-full bg-gray-300 rounded-3xl p-4">
                 <h1 className="font-bold text-3xl mb-4">Tambah Data</h1>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
@@ -47,12 +48,12 @@ export default function CreateSiswa() {
                         error={errors.nama}
                     />
                     <TextInput
-                        id="kelas"
-                        label="Kelas"
-                        name="kelas"
-                        value={data.kelas}
+                        id="mapel"
+                        label="Mapel"
+                        name="mapel"
+                        value={data.mapel}
                         onChange={handleChange}
-                        error={errors.kelas}
+                        error={errors.mapel}
                     />
                     <TextInput
                         id="alamat"
@@ -78,6 +79,15 @@ export default function CreateSiswa() {
                         value={data.no_telp}
                         onChange={handleChange}
                         error={errors.no_telp}
+                    />
+                    <TextInput
+                        id="email"
+                        label="Email"
+                        name="email"
+                        type="email"
+                        value={data.email}
+                        onChange={handleChange}
+                        error={errors.email}
                     />
                     <FileInput
                         id="foto"

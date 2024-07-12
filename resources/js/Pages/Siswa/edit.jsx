@@ -6,7 +6,6 @@ import FormButtons from '../../Components/Button';
 
 const Edit = ({ siswa, showModal, setShowModal }) => {
     const { data, setData, put, errors } = useForm({
-        nis: siswa.nis,
         nama: siswa.nama,
         kelas: siswa.kelas,
         alamat: siswa.alamat,

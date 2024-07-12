@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Head, usePage, router, Link } from '@inertiajs/react';
+import { TextInput, PasswordInput } from '../../Components/Input/InputForm';
 
 function Login() {
     const { errors } = usePage().props;
@@ -24,34 +25,24 @@ function Login() {
                             <h5 className="text-xl font-bold mb-4">LOGIN</h5>
                             <hr className="mb-6" />
                             <form onSubmit={handleLogin}>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Email Address</label>
-                                    <input
-                                        type="email"
-                                        className={`mt-1 block w-full px-3 py-2 border ${
-                                            errors.email ? 'border-red-500' : 'border-gray-300'
-                                        } rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50`}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        placeholder="Email Address"
-                                    />
-                                    {errors.email && (
-                                        <p className="mt-1 text-sm text-red-500">{errors.email}</p>
-                                    )}
-                                </div>
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Password</label>
-                                    <input
-                                        type="password"
-                                        className={`mt-1 block w-full px-3 py-2 border ${
-                                            errors.password ? 'border-red-500' : 'border-gray-300'
-                                        } rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50`}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                        placeholder="Password"
-                                    />
-                                    {errors.password && (
-                                        <p className="mt-1 text-sm text-red-500">{errors.password}</p>
-                                    )}
-                                </div>
+                                <TextInput
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    error={errors.email}
+                                    placeholder="Email Address"
+                                />
+                                <PasswordInput
+                                    id="password"
+                                    label="Password"
+                                    name="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    error={errors.password}
+                                    placeholder="Password"
+                                />
                                 <button
                                     type="submit"
                                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import Modal from "../../Components/Modal";
+import { FileInput } from "../../Components/Input/InputForm";
 
 const ImportExcel = ({ showModal, setShowModal }) => {
     const { data, setData, post, processing, errors, recentlySuccessful, reset } =
@@ -28,6 +29,10 @@ const ImportExcel = ({ showModal, setShowModal }) => {
         }
     }, [recentlySuccessful, setShowModal]);
 
+    const handleFileChange = (e) => {
+        setData("file", e.target.files[0]);
+    };
+
     return (
         <Modal
             title="Import Excel"
@@ -36,19 +41,12 @@ const ImportExcel = ({ showModal, setShowModal }) => {
         >
             <Modal.Body>
                 <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <input
-                            type="file"
-                            className="form-control"
-                            id="file"
-                            onChange={(e) => setData("file", e.target.files[0])}
-                        />
-                        {errors.file && (
-                            <div className="invalid-feedback text-red-500">
-                                {errors.file}
-                            </div>
-                        )}
-                    </div>
+                    <FileInput
+                        id="file"
+                        label="Select Excel File"
+                        onChange={handleFileChange}
+                        error={errors.file}
+                    />
                     <Modal.Footer>
                         <button
                             type="button"

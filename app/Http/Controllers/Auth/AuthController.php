@@ -28,9 +28,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            if (Auth::user()->role == 'siswa') {
-                return redirect('dashboard')->with('success', 'Login berhasil sebagai kasir');
-            } elseif (Auth::user()->role == 'admin') {
+            if (Auth::user()->role == 'admin') {
                 return redirect('dashboard')->with('success', 'Login berhasil sebagai admin');
             } elseif (Auth::user()->role == 'pengajar') {
                 return redirect('dashboard')->with('success', 'Login berhasil sebagai pengajar');
@@ -54,7 +52,6 @@ class AuthController extends Controller
             'name'      => 'required',
             'email'     => 'required|unique:users',
             'password'  => 'required|confirmed',
-            'role'  => 'required'
         ]);
 
 
@@ -65,7 +62,6 @@ class AuthController extends Controller
         User::create([
             'name'      => $request->name,
             'email'     => $request->email,
-            'role'     => $request->role,
             'password'  => bcrypt($request->password)
         ]);
 

@@ -8,7 +8,6 @@ function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordConfirmation, setPasswordConfirmation] = useState('');
-    const [role, setRole] = useState('siswa');
 
     const storeRegister = async (e) => {
         e.preventDefault();
@@ -17,7 +16,6 @@ function Register() {
             email: email,
             password: password,
             password_confirmation: passwordConfirmation,
-            role: role
         });
     };
 
@@ -66,17 +64,6 @@ function Register() {
                                     onChange={(e) => setPasswordConfirmation(e.target.value)}
                                     placeholder="Password Confirmation"
                                 />
-                                <div className="mb-4">
-                                    <label className="block text-sm font-medium text-gray-700">Role</label>
-                                    <select
-                                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50"
-                                        onChange={(e) => setRole(e.target.value)}
-                                        value={role}
-                                    >
-                                        <option value="siswa">Siswa</option>
-                                        <option value="pengajar">Pengajar</option>
-                                    </select>
-                                </div>
                                 <button
                                     type="submit"
                                     className="w-full inline-flex items-center justify-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"

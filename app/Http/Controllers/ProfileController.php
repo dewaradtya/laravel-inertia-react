@@ -10,6 +10,14 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
+    public function index()
+    {
+        $users = User::where('role', 'pengajar')->orderBy('created_at', 'DESC')->get();
+        return Inertia::render('Profile/index', [
+            'users' => $users,
+        ]);
+    }
+
     public function show(User $user)
     {
         return Inertia::render('Profile', [

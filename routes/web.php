@@ -21,8 +21,10 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
-    Route::resource('siswa', SiswaController::class)->middleware('userAkses:pengajar');
+    Route::resource('siswa', SiswaController::class);
     Route::resource('profile', ProfileController::class);
+    Route::resource('profile', ProfileController::class)->except('index, destroy');
+    Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin');
     Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');
     Route::post('/siswa-import', [SiswaController::class, 'import'])->name('siswa.import');
 });

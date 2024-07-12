@@ -1,7 +1,8 @@
 import React from "react";
 import Layout from "../../Layouts/Layout";
-import { Head, Link, useForm } from "@inertiajs/react";
+import { Head, useForm } from "@inertiajs/react";
 import { TextInput } from '../../Components/Input/InputForm';
+import FormButtons from '../../Components/Button';
 
 export default function CreateSiswa() {
     const { data, setData, post, errors } = useForm({
@@ -47,20 +48,12 @@ export default function CreateSiswa() {
                         onChange={handleChange}
                         error={errors.nama}
                     />
-                    <div>
-                        <button
-                            type="submit"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 mx-2"
-                        >
-                            Simpan
-                        </button>
-                        <Link
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                            href="/siswa"
-                        >
-                            Cancel
-                        </Link>
-                    </div>
+                    <FormButtons
+                        saveLabel="Simpan"
+                        cancelLabel="Cancel"
+                        saveAction={handleSubmit}
+                        cancelLink="/siswa"
+                    />
                 </form>
             </div>
         </Layout>

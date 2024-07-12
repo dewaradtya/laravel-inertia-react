@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import Modal from "../../Components/Modal";
 import { FileInput } from "../../Components/Input/InputForm";
+import FormButtons from "../../Components/Button"; 
 
 const ImportExcel = ({ showModal, setShowModal }) => {
     const { data, setData, post, processing, errors, recentlySuccessful, reset } =
@@ -48,21 +49,14 @@ const ImportExcel = ({ showModal, setShowModal }) => {
                         error={errors.file}
                     />
                     <Modal.Footer>
-                        <button
-                            type="button"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-gray-600 bg-gray-200 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                            onClick={() => setShowModal(false)}
-                            disabled={processing}
-                        >
-                            Tutup
-                        </button>
-                        <button
-                            type="submit"
-                            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 mr-2"
-                            disabled={processing}
-                        >
-                            {processing ? "Memproses..." : "Import"}
-                        </button>
+                        <FormButtons
+                            saveLabel={processing ? "Memproses..." : "Import"}
+                            cancelLabel="Tutup"
+                            saveAction={handleSubmit}
+                            cancelAction={() => setShowModal(false)}
+                            saveDisabled={processing}
+                            cancelDisabled={processing}
+                        />
                     </Modal.Footer>
                 </form>
             </Modal.Body>

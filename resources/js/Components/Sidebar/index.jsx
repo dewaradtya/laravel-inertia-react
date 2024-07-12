@@ -6,11 +6,15 @@ export default function Sidebar() {
 
     const handleLogout = (e) => {
         e.preventDefault();
-        router.post('/logout', {}, {
-            onSuccess: () => {
-                console.log("Successfully logged out!");
+        router.post(
+            "/logout",
+            {},
+            {
+                onSuccess: () => {
+                    console.log("Successfully logged out!");
+                },
             }
-        });
+        );
     };
 
     return (
@@ -27,39 +31,35 @@ export default function Sidebar() {
                                 className="flex items-center space-x-2"
                             >
                                 <span className="material-icons">home</span>
-                                <span className="font-semibold">
-                                    Dashboard
-                                </span>
+                                <span className="font-semibold">Dashboard</span>
                             </Link>
                         </li>
 
-                        {(auth.user && (auth.user.role === 'pengajar' || auth.user.role === 'admin')) && (
+                        <li>
+                            <Link
+                                href="/siswa"
+                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                            >
+                                <span className="material-icons">person</span>
+                                <span className="font-semibold">Siswa</span>
+                            </Link>
+                        </li>
+
+                        {auth.user && auth.user.role === "admin" && (
                             <li>
                                 <Link
-                                    href="/siswa"
+                                    href="/profile"
                                     className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
                                 >
-                                    <span className="material-icons">person</span>
+                                    <span className="material-icons">
+                                        storage
+                                    </span>
                                     <span className="font-semibold">
-                                        Siswa
+                                        Profile User
                                     </span>
                                 </Link>
                             </li>
                         )}
-
-                        <li>
-                            <Link
-                                href="/contact"
-                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
-                            >
-                                <span className="material-icons">
-                                    contact_mail
-                                </span>
-                                <span className="font-semibold">
-                                    Contact
-                                </span>
-                            </Link>
-                        </li>
                     </ul>
                     <div className="mt-44 p-4 bg-purple-400 rounded-xl">
                         <h2 className="font-semibold mb-2">About</h2>

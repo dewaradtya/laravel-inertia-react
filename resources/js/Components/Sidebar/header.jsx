@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import Modal from "../../Components/Modal/index";
-import Profile from "../../Pages/Auth/Profile";
+import Profile from "../../Pages/Profile/Profile";
 
 export default function Header() {
     const { auth } = usePage().props;

@@ -119,3 +119,29 @@ export function PasswordInput({ id, label, name, value, onChange, error, placeho
         </div>
     );
 }
+
+
+export function DropdownInput({ id, label, name, value, onChange, error, options = [], placeholder }) {
+    return (
+        <div className="mb-4">
+            <label htmlFor={id} className="block text-sm font-medium text-gray-700">
+                {label}
+            </label>
+            <select
+                id={id}
+                name={name}
+                value={value}
+                onChange={onChange}
+                className={`mt-1 block w-full py-2 px-3 border ${
+                    error ? 'border-red-500 focus:border-red-500' : 'border-gray-300 focus:border-purple-600'
+                } rounded-md shadow-sm focus:outline-none focus:ring focus:ring-purple-200 focus:ring-opacity-50 sm:text-sm`}
+            >
+                <option value="">{placeholder}</option>
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+            </select>
+            {error && <p className="mt-1 text-sm text-red-500">{error}</p>}
+        </div>
+    );
+}

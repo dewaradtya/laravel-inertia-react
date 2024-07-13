@@ -3,6 +3,7 @@
 use App\Exports\SiswaExport;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GuruController;
+use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
@@ -29,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('profile', ProfileController::class);
     Route::resource('profile', ProfileController::class)->except('index, destroy');
     Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin');
+    Route::resource('jadwal', JadwalController::class);
     Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');
     Route::post('/siswa-import', [SiswaController::class, 'import'])->name('siswa.import');
 });

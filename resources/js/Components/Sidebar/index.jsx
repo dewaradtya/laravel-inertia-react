@@ -69,6 +69,18 @@ export default function Sidebar() {
                             </li>
                         )}
 
+                        <li>
+                            <Link
+                                href="/jadwal"
+                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                            >
+                                <span className="material-icons">schedule</span>
+                                <span className="font-semibold">
+                                    Jadwal Pelajaran
+                                </span>
+                            </Link>
+                        </li>
+
                         {auth.user && auth.user.role === "admin" && (
                             <li>
                                 <p className="ml-5">Setting</p>
@@ -88,7 +100,7 @@ export default function Sidebar() {
                     </ul>
                     <button
                         onClick={handleLogout}
-                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-52 flex items-center space-x-2 text-sm font-semibold"
+                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-48 flex items-center space-x-2 text-sm font-semibold"
                     >
                         <span className="material-icons">logout</span>
                         <span className="font-semibold">Logout</span>

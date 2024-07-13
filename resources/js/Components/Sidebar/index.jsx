@@ -25,37 +25,53 @@ export default function Sidebar() {
                 </h1>
                 <nav>
                     <ul className="space-y-2 mx-2">
-                        <li className="px-4 py-2 bg-purple-400 hover:bg-purple-300 rounded-xl">
+                        <li>
                             <Link
                                 href="/dashboard"
-                                className="flex items-center space-x-2"
+                                className="flex items-center space-x-2 px-4 py-2 bg-purple-400 hover:bg-purple-300 rounded-xl"
                             >
                                 <span className="material-icons">home</span>
                                 <span className="font-semibold">Dashboard</span>
                             </Link>
                         </li>
 
-                        <li>
-                            <Link
-                                href="/siswa"
-                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
-                            >
-                                <span className="material-icons">person</span>
-                                <span className="font-semibold">Manajemen Siswa</span>
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
-                                href="/guru"
-                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
-                            >
-                                <span className="material-icons">person</span>
-                                <span className="font-semibold">Manajemen Guru</span>
-                            </Link>
-                        </li>
+                        {auth.user && auth.user.role === "admin" && (
+                            <li>
+                                <p className="ml-5">Manajemen</p>
+
+                                <Link
+                                    href="/siswa"
+                                    className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                                >
+                                    <span className="material-icons">
+                                        person
+                                    </span>
+                                    <span className="font-semibold">
+                                        Manajemen Siswa
+                                    </span>
+                                </Link>
+                            </li>
+                        )}
 
                         {auth.user && auth.user.role === "admin" && (
                             <li>
+                                <Link
+                                    href="/guru"
+                                    className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                                >
+                                    <span className="material-icons">
+                                        person
+                                    </span>
+                                    <span className="font-semibold">
+                                        Manajemen Guru
+                                    </span>
+                                </Link>
+                            </li>
+                        )}
+
+                        {auth.user && auth.user.role === "admin" && (
+                            <li>
+                                <p className="ml-5">Setting</p>
                                 <Link
                                     href="/profile"
                                     className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
@@ -70,22 +86,9 @@ export default function Sidebar() {
                             </li>
                         )}
                     </ul>
-                    <div className="mt-44 p-4 bg-purple-400 rounded-xl">
-                        <h2 className="font-semibold mb-2">About</h2>
-                        <p className="text-sm">
-                            Mantoel Sam is Lorem ipsum dolor sit amet
-                            consectetur adipisicing elit. Earum, possimus.
-                        </p>
-                        <Link
-                            href="/profile"
-                            className="text-sm font-semibold mt-2 hover:underline"
-                        >
-                            View Profile
-                        </Link>
-                    </div>
                     <button
                         onClick={handleLogout}
-                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-2 flex items-center space-x-2 text-sm font-semibold"
+                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-52 flex items-center space-x-2 text-sm font-semibold"
                     >
                         <span className="material-icons">logout</span>
                         <span className="font-semibold">Logout</span>

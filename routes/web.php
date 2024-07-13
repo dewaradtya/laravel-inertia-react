@@ -22,9 +22,11 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
-    Route::resource('siswa', SiswaController::class);
+    Route::resource('siswa', SiswaController::class)->middleware('userAkses:admin');
+    Route::get('/guru-export', [GuruController::class, 'downloadFormat'])->name('guru.download-format');
+    Route::post('/guru-import', [GuruController::class, 'import'])->name('guru.import');
+    Route::resource('guru', GuruController::class)->middleware('userAkses:admin');
     Route::resource('profile', ProfileController::class);
-    Route::resource('guru', GuruController::class);
     Route::resource('profile', ProfileController::class)->except('index, destroy');
     Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin');
     Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');

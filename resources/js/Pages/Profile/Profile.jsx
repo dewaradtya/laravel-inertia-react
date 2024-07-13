@@ -1,8 +1,10 @@
 import React from 'react';
 import { useForm } from '@inertiajs/react';
+import Modal from '../../Components/Modal';
 import { TextInput, FileInput, PasswordInput } from '../../Components/Input/InputForm';
+import FormButtons from '../../Components/Button';
 
-export default function Profile({ user }) {
+const Profile = ({ user, showModal, setShowModal }) => {
     const { data, setData, put, errors } = useForm({
         name: user.name,
         email: user.email,
@@ -13,64 +15,83 @@ export default function Profile({ user }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route('profile.update'));
+
+        const formData = new FormData();
+        Object.keys(data).forEach(key => {
+            formData.append(key, data[key]);
+        });
+
+        put(route('profile.update'), formData, {
+            onSuccess: () => {
+                console.log("Profil berhasil diperbarui!");
+                setShowModal(false);
+            },
+        });
+    };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData(name, value);
     };
 
     const handleFileChange = (e) => {
-        setData('avatar', e.target.files[0]);
+        const { name, files } = e.target;
+        setData(name, files[0]);
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="space-y-4">
-                <TextInput
-                    id="name"
-                    label="Name"
-                    name="name"
-                    value={data.name}
-                    onChange={(e) => setData('name', e.target.value)}
-                    error={errors.name}
-                />
-                <TextInput
-                    id="email"
-                    label="Email"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    onChange={(e) => setData('email', e.target.value)}
-                    error={errors.email}
-                />
-                <FileInput
-                    id="avatar"
-                    label="Avatar"
-                    name="avatar"
-                    onChange={handleFileChange}
-                    error={errors.avatar}
-                />
-                <PasswordInput
-                    id="password"
-                    label="Password"
-                    name="password"
-                    value={data.password}
-                    onChange={(e) => setData('password', e.target.value)}
-                    error={errors.password}
-                />
-                <PasswordInput
-                    id="password_confirmation"
-                    label="Confirm Password"
-                    name="password_confirmation"
-                    value={data.password_confirmation}
-                    onChange={(e) => setData('password_confirmation', e.target.value)}
-                />
-                <div>
-                    <button
-                        type="submit"
-                        className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                        Update Profile
-                    </button>
-                </div>
-            </form>
-        </div>
+        <Modal title="Edit Profil" showModal={showModal} setShowModal={setShowModal}>
+            <Modal.Body>
+                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                    <TextInput
+                        id="name"
+                        label="Name"
+                        name="name"
+                        value={data.name}
+                        onChange={handleChange}
+                        error={errors.name}
+                    />
+                    <TextInput
+                        id="email"
+                        label="Email"
+                        type="email"
+                        name="email"
+                        value={data.email}
+                        onChange={handleChange}
+                        error={errors.email}
+                    />
+                    <FileInput
+                        id="avatar"
+                        label="Avatar"
+                        name="avatar"
+                        onChange={handleFileChange}
+                        error={errors.avatar}
+                    />
+                    <PasswordInput
+                        id="password"
+                        label="Password"
+                        name="password"
+                        value={data.password}
+                        onChange={handleChange}
+                        error={errors.password}
+                    />
+                    <PasswordInput
+                        id="password_confirmation"
+                        label="Confirm Password"
+                        name="password_confirmation"
+                        value={data.password_confirmation}
+                        onChange={handleChange}
+                    />
+                    <FormButtons
+                        saveLabel="Update Profile" 
+                        cancelLabel="Cancel" 
+                        saveAction={handleSubmit} 
+                        cancelLink="#" 
+                    />
+                </form>
+            </Modal.Body>
+        </Modal>
     );
-}
+};
+
+export default Profile;

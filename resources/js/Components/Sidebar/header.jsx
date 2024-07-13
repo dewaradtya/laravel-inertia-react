@@ -52,7 +52,13 @@ export default function Header() {
                 showModal={showProfileModal}
                 setShowModal={setShowProfileModal}
             >
-                {auth?.user && <Profile user={auth.user} />}
+                {auth?.user && (
+                    <Profile
+                        user={auth.user}
+                        showModal={showProfileModal}
+                        setShowModal={setShowProfileModal}
+                    />
+                )}
             </Modal>
         </header>
     );

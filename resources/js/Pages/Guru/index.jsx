@@ -3,7 +3,7 @@ import { Link, router, usePage } from "@inertiajs/react";
 import Layout from "../../Layouts/Layout";
 import Table from "../../Components/Tabel/index";
 import Edit from "../Guru/edit";
-import ImportModal from "../Siswa/import";
+import ImportModal from "./import";
 import Pagination from "../../Components/Pagination/index";
 
 export default function Guru({ guru, meta }) {

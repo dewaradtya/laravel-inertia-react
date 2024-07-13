@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\GuruExport;
+use App\Imports\GuruImport;
 use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
+use Maatwebsite\Excel\Facades\Excel;
 
 class GuruController extends Controller
 {
@@ -129,6 +132,32 @@ class GuruController extends Controller
             return Redirect::route('guru.index')->with('success', 'Data guru berhasil dihapus.');
         } else {
             return Redirect::route('guru.index')->with('error', 'Data guru tidak ditemukan.');
+        }
+    }
+
+    public function downloadFormat()
+    {
+        return Excel::download(new GuruExport, 'Guru.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls',
+        ]);
+
+        try {
+            Excel::import(new GuruImport, $request->file('file'));
+            return Redirect::back()->with('success', 'Data guru berhasil diimport.');
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            $failures = $e->failures();
+            $errorMessages = [];
+            foreach ($failures as $failure) {
+                $errorMessages[] = 'Baris ' . $failure->row() . ': ' . implode(', ', $failure->errors());
+            }
+            return Redirect::back()->with('error', 'Kesalahan saat mengimport data: ' . implode('. ', $errorMessages));
+        } catch (\Exception $e) {
+            return Redirect::back()->with('error', 'Terjadi kesalahan saat mengimport data: ' . $e->getMessage());
         }
     }
 }

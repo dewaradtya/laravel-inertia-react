@@ -12,7 +12,7 @@ class PageController extends Controller
 {
     public function dashboard()
     {
-        $totalUsers = User::where('role', 'pengajar')->count();
+        $totalUsers = User::where('role', ['pengajar','siswa'])->count();
         $visitsToday = Visit::whereDate('created_at', Carbon::today())->count();
 
         return Inertia::render('home', [

@@ -32,6 +32,8 @@ class AuthController extends Controller
                 return redirect('dashboard')->with('success', 'Login berhasil sebagai admin');
             } elseif (Auth::user()->role == 'pengajar') {
                 return redirect('dashboard')->with('success', 'Login berhasil sebagai pengajar');
+            } elseif (Auth::user()->role == 'siswa') {
+                return redirect('dashboard')->with('success', 'Login berhasil sebagai siswa');
             }
         }
 

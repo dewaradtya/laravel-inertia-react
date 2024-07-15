@@ -21,7 +21,7 @@ export default function Sidebar() {
         <aside className="h-screen w-64 bg-purple-600 text-white border-r rounded-3xl border-blue-200 shadow-lg m-4">
             <div className="pt-8">
                 <h1 className="text-2xl italic font-bold text-center mb-8">
-                    Mantoel Sam
+                    School Sam
                 </h1>
                 <nav>
                     <ul className="space-y-2 mx-2">
@@ -70,6 +70,7 @@ export default function Sidebar() {
                         )}
 
                         <li>
+                        <p className="ml-5">Schedule</p>
                             <Link
                                 href="/jadwal"
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
@@ -77,6 +78,19 @@ export default function Sidebar() {
                                 <span className="material-icons">schedule</span>
                                 <span className="font-semibold">
                                     Jadwal Pelajaran
+                                </span>
+                            </Link>
+                        </li>
+                        <li>
+
+                        <p className="ml-5">Presensi</p>
+                            <Link
+                                href="/presensi"
+                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                            >
+                                <span className="material-icons">note</span>
+                                <span className="font-semibold">
+                                    Presensi Siswa
                                 </span>
                             </Link>
                         </li>
@@ -97,14 +111,14 @@ export default function Sidebar() {
                                 </Link>
                             </li>
                         )}
-                    </ul>
                     <button
                         onClick={handleLogout}
-                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl mt-48 flex items-center space-x-2 text-sm font-semibold"
+                        className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl flex items-center space-x-2 text-sm font-semibold"
                     >
                         <span className="material-icons">logout</span>
                         <span className="font-semibold">Logout</span>
                     </button>
+                    </ul>
                 </nav>
             </div>
         </aside>

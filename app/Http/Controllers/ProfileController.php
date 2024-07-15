@@ -12,7 +12,10 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        $users = User::where('role', 'pengajar')->orderBy('created_at', 'DESC')->get();
+        $users = User::whereIn('role', ['pengajar', 'siswa'])
+            ->orderBy('created_at', 'DESC')
+            ->get();
+
         return Inertia::render('Profile/index', [
             'users' => $users,
         ]);
@@ -32,30 +35,30 @@ class ProfileController extends Controller
     }
 
     public function update(Request $request, $id)
-{
-    $user = User::findOrFail($id);
+    {
+        $user = User::findOrFail($id);
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        'password' => 'nullable|string|min:8|confirmed',
-        'avatar' => 'nullable|image|max:2048',
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => 'nullable|string|min:8|confirmed',
+            'avatar' => 'nullable|image|max:2048',
+        ]);
 
-    $user->name = $request->name;
-    $user->email = $request->email;
+        $user->name = $request->name;
+        $user->email = $request->email;
 
-    if ($request->hasFile('avatar')) {
-        $avatarPath = $request->file('avatar')->store('avatars', 'public');
-        $user->avatar = $avatarPath;
+        if ($request->hasFile('avatar')) {
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $user->avatar = $avatarPath;
+        }
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('profile.edit', $user->id)->with('success', 'Profile updated successfully.');
     }
-
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
-    }
-
-    $user->save();
-
-    return redirect()->route('profile.edit', $user->id)->with('success', 'Profile updated successfully.');
-}
 }

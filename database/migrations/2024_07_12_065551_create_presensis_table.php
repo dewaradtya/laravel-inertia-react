@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('absensis', function (Blueprint $table) {
+        Schema::create('presensis', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('siswa_id');
-            $table->enum('keterangan', ['Hadir', 'Absen', 'Izin'])->default('Hadir');
+            $table->enum('keterangan', ['Hadir', 'Absen', 'Izin', 'Sakit'])->default('Hadir');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('absensis');
+        Schema::dropIfExists('presensis');
     }
 };

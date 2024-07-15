@@ -30,9 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('guru', GuruController::class)->middleware('userAkses:admin');
     Route::get('/guru-export', [GuruController::class, 'downloadFormat'])->name('guru.download-format');
     Route::post('/guru-import', [GuruController::class, 'import'])->name('guru.import');
-    Route::resource('profile', ProfileController::class);
     Route::resource('profile', ProfileController::class)->except('index, destroy');
-    Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin');
+    Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin'); 
+    Route::get('/profile/edit/{id}', [ProfileController::class, 'userEdit'])->name('profile.userEdit');
+    Route::put('/profile-user/{id}', [ProfileController::class, 'userUpdate'])->name('profile.userUpdate');
     Route::resource('jadwal', JadwalController::class);
     Route::resource('presensi', PresensiController::class);
 });

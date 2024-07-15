@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Presensi;
 use App\Models\Siswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,9 @@ class PresensiController extends Controller
      */
     public function index()
     {
-        $presensi = Presensi::with('siswa')->paginate(10);
+        $today = Carbon::today();
+        $presensi = Presensi::with('siswa')->whereDate('created_at', $today)->paginate(10);
+
         return Inertia::render('Presensi/index', [
             'presensi' => $presensi,
             'flash' => [

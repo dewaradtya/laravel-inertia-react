@@ -41,12 +41,12 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            // 'nama' => 'required|string|max:255',
-            // 'kelas' => 'required|string|max:10',
-            // 'alamat' => 'required|string|max:255',
-            // 'tanggal_lahir' => 'required|date',
-            // 'no_telp' => 'required|string|max:15',
-            // 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'kelas' => 'required|string|max:10',
+            'mapel' => 'required|string',
+            'guru_id' => 'required|exists:gurus,id',
+            'hari' => 'required|string',
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i',
         ]);
 
         if ($validator->fails()) {
@@ -83,12 +83,12 @@ class JadwalController extends Controller
     public function update(Request $request, string $id)
     {
         $request->validate([
-            // 'nama' => 'required|string|max:255',
-            // 'kelas' => 'required|string|max:10',
-            // 'alamat' => 'required|string|max:255',
-            // 'tanggal_lahir' => 'required|date',
-            // 'no_telp' => 'required|string|max:15',
-            // 'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'kelas' => 'required|string|max:10',
+            'mapel' => 'required|string',
+            'guru_id' => 'required|exists:gurus,id',
+            'hari' => 'required|string',
+            'jam_mulai' => 'required|date_format:H:i',
+            'jam_selesai' => 'required|date_format:H:i',
         ]);
 
         $data = $request->all();

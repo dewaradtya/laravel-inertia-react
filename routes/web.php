@@ -8,6 +8,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SiswaController;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
@@ -37,3 +38,6 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('jadwal', JadwalController::class);
     Route::resource('presensi', PresensiController::class);
 });
+
+Route::get('/cek', [PageController::class, 'cek'])->name('cek');
+Route::post('/cek', [PageController::class, 'cekOngkir']);

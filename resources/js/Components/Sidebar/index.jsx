@@ -70,7 +70,7 @@ export default function Sidebar() {
                         )}
 
                         <li>
-                        <p className="ml-5">Schedule</p>
+                        <p className="ml-5">Menu</p>
                             <Link
                                 href="/jadwal"
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
@@ -83,7 +83,6 @@ export default function Sidebar() {
                         </li>
                         <li>
 
-                        <p className="ml-5">Presensi</p>
                             <Link
                                 href="/presensi"
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
@@ -97,7 +96,6 @@ export default function Sidebar() {
 
                         <li>
 
-                        <p className="ml-5">Nilai</p>
                             <Link
                                 href="/nilai"
                                 className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
@@ -105,6 +103,18 @@ export default function Sidebar() {
                                 <span className="material-icons">grade</span>
                                 <span className="font-semibold">
                                     Nilai Siswa
+                                </span>
+                            </Link>
+                        </li>
+                        <li>
+
+                            <Link
+                                href="/pengumuman"
+                                className="flex items-center space-x-2 px-4 py-2 rounded-xl hover:bg-purple-500 transition duration-200"
+                            >
+                                <span className="material-icons">announcement</span>
+                                <span className="font-semibold">
+                                    Pengumuman Sekolah
                                 </span>
                             </Link>
                         </li>

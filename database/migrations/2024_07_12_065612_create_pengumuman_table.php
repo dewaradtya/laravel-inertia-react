@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('judul');
             $table->text('isi');
+            $table->string('foto')->nullable();
             $table->timestamps();
         });
     }

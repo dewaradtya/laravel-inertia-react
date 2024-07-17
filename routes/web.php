@@ -33,12 +33,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/guru-export', [GuruController::class, 'downloadFormat'])->name('guru.download-format');
     Route::post('/guru-import', [GuruController::class, 'import'])->name('guru.import');
     Route::resource('profile', ProfileController::class)->except('index, destroy');
-    Route::resource('profile', ProfileController::class)->only(['index'])->middleware('userAkses:admin'); 
-    Route::get('/profile/edit/{id}', [ProfileController::class, 'userEdit'])->name('profile.userEdit');
     Route::put('/profile-user/{id}', [ProfileController::class, 'userUpdate'])->name('profile.userUpdate');
-    Route::resource('jadwal', JadwalController::class);
+    Route::resource('jadwal', JadwalController::class)->except('create,edit');
+    Route::group(['middleware' => ['userAkses:admin,pengajar']], function () {
+        Route::get('jadwal/create', [JadwalController::class, 'create'])->name('jadwal.create');
+        Route::get('nilai/create', [NilaiController::class, 'create'])->name('nilai.create');
+        Route::get('profile', [ProfileController::class, 'index'])->name('profile.index');
+        Route::delete('profile/{profile}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
     Route::resource('presensi', PresensiController::class);
-    Route::resource('nilai', NilaiController::class);
+    Route::resource('nilai', NilaiController::class)->except('create');
 });
 
 Route::get('/cek', [PageController::class, 'cek'])->name('cek');

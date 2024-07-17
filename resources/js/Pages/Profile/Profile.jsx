@@ -21,9 +21,9 @@ const Profile = ({ user, showModal, setShowModal }) => {
             formData.append(key, data[key]);
         });
 
-        put(route('profile.update'), formData, {
+        put(`/profile/${user.id}`, formData, {
             onSuccess: () => {
-                console.log("Profil berhasil diperbarui!");
+                console.log("Data berhasil diperbarui!");
                 setShowModal(false);
             },
         });

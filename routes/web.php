@@ -4,6 +4,7 @@ use App\Exports\SiswaExport;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\NilaiController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\ProfileController;
@@ -37,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profile-user/{id}', [ProfileController::class, 'userUpdate'])->name('profile.userUpdate');
     Route::resource('jadwal', JadwalController::class);
     Route::resource('presensi', PresensiController::class);
+    Route::resource('nilai', NilaiController::class);
 });
 
 Route::get('/cek', [PageController::class, 'cek'])->name('cek');

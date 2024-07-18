@@ -2,6 +2,7 @@
 
 use App\Exports\SiswaExport;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ChatbotController;
 use App\Http\Controllers\GuruController;
 use App\Http\Controllers\JadwalController;
 use App\Http\Controllers\NilaiController;
@@ -34,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('profile', ProfileController::class)->except('index, destroy');
     Route::put('/profile-user/{id}', [ProfileController::class, 'userUpdate'])->name('profile.userUpdate');
     Route::resource('presensi', PresensiController::class);
+    Route::post('/chat', [ChatbotController::class, 'chat']);
+    Route::get('/chat', [ChatbotController::class, 'index'])->name('chat.index');
     
     Route::group(['middleware' => ['userAkses:admin,pengajar']], function () {
         Route::get('jadwal/create', [JadwalController::class, 'create'])->name('jadwal.create');
@@ -49,3 +52,4 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/cek', [PageController::class, 'cek'])->name('cek');
 Route::post('/cek', [PageController::class, 'cekOngkir']);
+

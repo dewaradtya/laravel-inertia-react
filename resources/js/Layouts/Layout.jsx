@@ -23,9 +23,11 @@ export default function Layout({ children }) {
                 <Chat isOpen={showChat} toggleChat={toggleChat} />
                 <button
                     onClick={toggleChat}
-                    className={`fixed bottom-5 right-5 bg-purple-500 text-white px-3 py-2 rounded-full z-50 transition-all duration-300 transform ${showChat ? 'rotate-45 scale-90' : ''}`}
+                    className={`material-icons fixed bottom-10 right-10 bg-purple-500 text-white px-3 py-3 rounded-full z-50 transition-all duration-300 transform ${
+                        showChat ? "rotate-45 scale-90" : ""
+                    } bottom-24`}
                 >
-                    <span className="material-icons">chat</span>
+                    chat
                 </button>
             </div>
         </div>

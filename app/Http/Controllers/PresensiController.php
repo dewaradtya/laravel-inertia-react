@@ -45,7 +45,7 @@ class PresensiController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'siswa_id' => 'required|exists:siswa,id|unique:presensis,siswa_id',
+            'siswa_id' => 'required|exists:siswa,id',
             'keterangan' => 'required|in:Hadir,Absen,Izin,Sakit'
         ]);
 

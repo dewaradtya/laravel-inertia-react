@@ -71,15 +71,15 @@ export default function Jadwal({ jadwal, meta }) {
                         <>
                             <button
                                 onClick={() => handleEditClick(row)}
-                                className="text-blue-600 hover:text-blue-700 mr-2"
+                                className="material-icons text-white p-1 rounded-lg bg-blue-500 hover:bg-blue-700"
                             >
-                                Edit
+                                edit
                             </button>
                             <button
                                 onClick={() => handleDelete(row.id)}
-                                className="text-red-600 hover:text-red-700 ml-2"
+                                className="material-icons text-white p-1 rounded-lg bg-red-500 hover:bg-red-700 ml-2"
                             >
-                                Hapus
+                                delete
                             </button>
                         </>
                     ),

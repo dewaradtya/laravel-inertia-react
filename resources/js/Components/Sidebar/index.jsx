@@ -23,7 +23,7 @@ export default function Sidebar() {
             href: "/siswa",
             icon: "person",
             label: "Manajemen Siswa",
-            adminOnly: true,
+            adminOnly: false,
         },
         {
             href: "/guru",

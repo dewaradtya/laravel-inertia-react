@@ -6,11 +6,13 @@ import Edit from "../Siswa/edit";
 import ImportModal from "./import";
 import Pagination from "../../Components/Pagination/index";
 
-export default function Siswa({ siswa }) {
-    const { flash } = usePage().props;
+export default function Siswa({ siswa, userRole }) {
+    const { flash, auth } = usePage().props;
     const [showEditModal, setShowEditModal] = useState(false);
     const [showImportModal, setShowImportModal] = useState(false);
     const [selectedSiswa, setSelectedSiswa] = useState(null);
+    const [identity, setIdentity] = useState("");
+    const [identityDetails, setIdentityDetails] = useState(null);
 
     const handleEditClick = (siswa) => {
         setSelectedSiswa(siswa);
@@ -58,15 +60,15 @@ export default function Siswa({ siswa }) {
                     <>
                         <button
                             onClick={() => handleEditClick(row)}
-                            className="text-blue-600 hover:text-blue-700 mr-2"
+                            className="material-icons text-white p-1 rounded-lg bg-blue-500 hover:bg-blue-700"
                         >
-                            Edit
+                            edit
                         </button>
                         <button
                             onClick={() => handleDelete(row.id)}
-                            className="text-red-600 hover:text-red-700 ml-2"
+                            className="material-icons text-white p-1 rounded-lg bg-red-500 hover:bg-red-700 ml-2"
                         >
-                            Hapus
+                            delete
                         </button>
                     </>
                 ),
@@ -75,40 +77,114 @@ export default function Siswa({ siswa }) {
         []
     );
 
+    const handleViewIdentity = () => {
+        const detail = siswa.data.find(
+            (s) => s.nama.toLowerCase() === identity.toLowerCase()
+        );
+        if (detail) {
+            setIdentityDetails(detail);
+        } else {
+            alert("Identitas tidak ditemukan");
+            setIdentityDetails(null);
+        }
+    };
+
     return (
         <Layout>
             <div className="container mx-auto flex justify-between items-center mb-2">
                 <h1 className="font-bold text-2xl text-black">Data Siswa</h1>
-                <div className="flex items-center space-x-2">
+                {auth.user && auth.user.role === "admin" && (
+                    <div className="flex items-center space-x-2">
+                        <button
+                            className="border bg-blue-600 hover:bg-blue-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
+                            onClick={() => setShowImportModal(true)}
+                        >
+                            <span className="material-icons text-lg">
+                                file_upload
+                            </span>
+                            Import Excel
+                        </button>
+                        <a
+                            className="border bg-yellow-600 hover:bg-yellow-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
+                            href="/siswa-export"
+                        >
+                            <span className="material-icons text-lg">
+                                download
+                            </span>
+                            Download
+                        </a>
+                        <Link
+                            className="border bg-green-600 hover:bg-green-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
+                            href="/siswa/create"
+                        >
+                            <span className="material-icons text-lg">add</span>
+                            Tambah Data
+                        </Link>
+                    </div>
+                )}
+            </div>
+            {auth.user && auth.user.role === "admin" ? (
+                <>
+                    <Table columns={columns} rows={siswa.data} />
+                    <div className="mt-4">
+                        <Pagination meta={siswa.meta} />
+                    </div>
+                </>
+            ) : (
+                <div className="flex flex-col items-center">
+                    <input
+                        type="text"
+                        value={identity}
+                        onChange={(e) => setIdentity(e.target.value)}
+                        placeholder="Masukkan nama lengkap"
+                        className="border-b border-gray-800 px-4 py-2 mb-2 focus:outline-none"
+                    />
                     <button
-                        className="border bg-blue-600 hover:bg-blue-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
-                        onClick={() => setShowImportModal(true)}
+                        onClick={handleViewIdentity}
+                        className="material-icons bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md mb-4"
                     >
-                        <span className="material-icons text-lg">
-                            file_upload
-                        </span>
-                        Import Excel
+                        search
                     </button>
-                    <a
-                        className="border bg-yellow-600 hover:bg-yellow-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
-                        href="/siswa-export"
-                    >
-                        <span className="material-icons text-lg">download</span>
-                        Download
-                    </a>
-                    <Link
-                        className="border bg-green-600 hover:bg-green-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
-                        href="/siswa/create"
-                    >
-                        <span className="material-icons text-lg">add</span>
-                        Tambah Data
-                    </Link>
+                    {identityDetails && (
+                        <div className="p-4 border rounded-3xl bg-yellow-300 shadow-md w-full max-w-md text-gray-700">
+                            <div className="flex items-center mb-4">
+                                <img
+                                    src={
+                                        identityDetails.foto
+                                            ? `http://localhost:8000/storage/${identityDetails.foto}`
+                                            : "/img/default.jpg"
+                                    }
+                                    alt={identityDetails.nama}
+                                    className="w-24 h-24 object-cover rounded-full border-2 border-gray-300"
+                                />
+                                <div className="ml-4">
+                                    <p className="text-md">
+                                        <strong>Nama:</strong>{" "}
+                                        {identityDetails.nama}
+                                    </p>
+                                    <p className="text-md">
+                                        <strong>Kelas:</strong>{" "}
+                                        {identityDetails.kelas}
+                                    </p>
+                                    <p className="text-md">
+                                        <strong>Alamat:</strong>{" "}
+                                        {identityDetails.alamat}
+                                    </p>
+
+                                    <p>
+                                        <strong>Tanggal Lahir:</strong>{" "}
+                                        {identityDetails.tanggal_lahir}
+                                    </p>
+                                    <p>
+                                        <strong>No. Telp:</strong>{" "}
+                                        {identityDetails.no_telp}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            </div>
-            <Table columns={columns} rows={siswa.data} />
-            <div className="mt-4">
-                <Pagination meta={siswa.meta} />
-            </div>
+            )}
             {showEditModal && selectedSiswa && (
                 <Edit
                     siswa={selectedSiswa}

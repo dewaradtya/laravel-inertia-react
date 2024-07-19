@@ -12,7 +12,7 @@ const Edit = ({ guru, showModal, setShowModal }) => {
         tanggal_lahir: guru.tanggal_lahir,
         no_telp: guru.no_telp,
         email: guru.email,
-        foto: null,
+        foto: guru.foto,
     });
 
     const handleSubmit = (e) => {

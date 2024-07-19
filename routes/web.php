@@ -26,7 +26,8 @@ Route::post('/logout', [AuthController::class, 'logout']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [PageController::class, 'dashboard']);
-    Route::resource('siswa', SiswaController::class)->middleware('userAkses:admin');
+    Route::resource('siswa', SiswaController::class)->except('index')->middleware('userAkses:admin');
+    Route::resource('siswa', SiswaController::class)->only('index');
     Route::get('/siswa-export', [SiswaController::class, 'downloadFormat'])->name('siswa.download-format');
     Route::post('/siswa-import', [SiswaController::class, 'import'])->name('siswa.import');
     Route::resource('guru', GuruController::class)->middleware('userAkses:admin');

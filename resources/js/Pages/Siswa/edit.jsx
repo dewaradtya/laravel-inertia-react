@@ -11,7 +11,7 @@ const Edit = ({ siswa, showModal, setShowModal }) => {
         alamat: siswa.alamat,
         tanggal_lahir: siswa.tanggal_lahir,
         no_telp: siswa.no_telp,
-        foto: null,
+        foto: siswa.foto,
     });
 
     const handleSubmit = (e) => {

@@ -23,44 +23,44 @@ export default function Sidebar() {
             href: "/siswa",
             icon: "person",
             label: "Manajemen Siswa",
-            adminOnly: true
+            adminOnly: true,
         },
         {
             href: "/guru",
             icon: "person",
             label: "Manajemen Guru",
-            adminOnly: true
+            adminOnly: true,
         },
         {
             href: "/jadwal",
             icon: "schedule",
             label: "Jadwal Pelajaran",
-            adminOnly: false
+            adminOnly: false,
         },
         {
             href: "/presensi",
             icon: "note",
             label: "Presensi Siswa",
-            adminOnly: false
+            adminOnly: false,
         },
         {
             href: "/nilai",
             icon: "grade",
             label: "Nilai Siswa",
-            adminOnly: false
+            adminOnly: false,
         },
         {
             href: "/pengumuman",
             icon: "announcement",
             label: "Pengumuman Sekolah",
-            adminOnly: false
+            adminOnly: false,
         },
         {
             href: "/profile",
             icon: "storage",
             label: "Profile User",
-            adminOnly: true
-        }
+            adminOnly: true,
+        },
     ];
 
     const renderMenuItems = () =>
@@ -97,7 +97,9 @@ export default function Sidebar() {
                                     className="flex items-center space-x-2 px-4 py-2 bg-purple-400 hover:bg-purple-300 rounded-xl"
                                 >
                                     <span className="material-icons">home</span>
-                                    <span className="font-semibold">Dashboard</span>
+                                    <span className="font-semibold">
+                                        Dashboard
+                                    </span>
                                 </Link>
                             </li>
                             {renderMenuItems()}
@@ -119,7 +121,8 @@ export default function Sidebar() {
                 <button
                     onClick={() => setIsModalOpen(true)}
                     className="material-icons bg-white p-2 rounded-full shadow-lg text-purple-600 focus:outline-none"
-                >menu
+                >
+                    menu
                 </button>
             </nav>
 
@@ -144,21 +147,32 @@ export default function Sidebar() {
                                         className="flex items-center space-x-2 px-4 py-2 bg-purple-400 hover:bg-purple-300 rounded-xl"
                                         onClick={() => setIsModalOpen(false)}
                                     >
-                                        <span className="material-icons">home</span>
-                                        <span className="font-semibold">Dashboard</span>
+                                        <span className="material-icons">
+                                            home
+                                        </span>
+                                        <span className="font-semibold">
+                                            Dashboard
+                                        </span>
                                     </Link>
                                 </li>
-                                {renderMenuItems().map((item) => (
-                                    <li key={item.key} onClick={() => setIsModalOpen(false)}>
+                                {renderMenuItems().map((item, index) => (
+                                    <div
+                                        key={index}
+                                        onClick={() => setIsModalOpen(false)}
+                                    >
                                         {item}
-                                    </li>
+                                    </div>
                                 ))}
                                 <button
                                     onClick={handleLogout}
                                     className="w-full p-4 bg-red-400 hover:bg-red-500 rounded-xl flex items-center space-x-2 text-sm font-semibold"
                                 >
-                                    <span className="material-icons">logout</span>
-                                    <span className="font-semibold">Logout</span>
+                                    <span className="material-icons">
+                                        logout
+                                    </span>
+                                    <span className="font-semibold">
+                                        Logout
+                                    </span>
                                 </button>
                             </ul>
                         </nav>

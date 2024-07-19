@@ -44,7 +44,7 @@ export default function Header() {
                         alt="Profile"
                         className="w-8 h-8 rounded-full"
                     />
-                    <span>Profile</span>
+                    <span className="hidden sm:inline">Profile</span>
                 </button>
             </div>
             <Modal

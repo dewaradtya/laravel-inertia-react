@@ -25,7 +25,7 @@ export default function Layout({ children }) {
                     onClick={toggleChat}
                     className={`material-icons fixed bottom-10 right-10 bg-purple-500 text-white px-3 py-3 rounded-full z-50 transition-all duration-300 transform ${
                         showChat ? "rotate-45 scale-90" : ""
-                    } bottom-24`}
+                    }`}
                 >
                     chat
                 </button>

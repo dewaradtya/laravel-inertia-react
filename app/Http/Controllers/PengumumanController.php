@@ -67,8 +67,12 @@ class PengumumanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pengumuman = Pengumuman::findOrFail($id);
+        return Inertia::render('Pengumuman/detail', [
+            'pengumuman' => $pengumuman,
+        ]);
     }
+
 
     /**
      * Show the form for editing the specified resource.

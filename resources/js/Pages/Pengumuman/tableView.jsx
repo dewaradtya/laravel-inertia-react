@@ -1,12 +1,22 @@
-import React, { useMemo } from 'react';
-import Table from '../../Components/Tabel/index';
+import React, { useMemo } from "react";
+import Table from "../../Components/Tabel/index";
 
 const TableView = ({ pengumuman, handleEditClick, handleDelete }) => {
     const columns = useMemo(
         () => [
             { label: "No", name: "no", renderCell: (_, index) => index + 1 },
             { label: "Judul", name: "judul" },
-            { label: "Isi", name: "isi" },
+            {
+                label: "Isi",
+                name: "isi",
+                renderCell: (row) => {
+                    const truncatedIsi =
+                        row.isi.length > 100
+                            ? row.isi.substring(0, 100) + "..."
+                            : row.isi;
+                    return <p className="text-gray-700">{truncatedIsi}</p>;
+                },
+            },
             {
                 label: "Foto",
                 name: "foto",
@@ -42,9 +52,7 @@ const TableView = ({ pengumuman, handleEditClick, handleDelete }) => {
         []
     );
 
-    return (
-        <Table columns={columns} rows={pengumuman.data} />
-    );
+    return <Table columns={columns} rows={pengumuman.data} />;
 };
 
 export default TableView;

@@ -11,12 +11,19 @@ const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString("id-ID", options);
 };
 
+const getCardColor = (nilai) => {
+    if (nilai >= 85) return "bg-green-500";
+    if (nilai <= 80) return "bg-red-500";
+    return "bg-yellow-500";
+};
+
 export default function Nilai({ nilai, meta }) {
     const { flash, auth } = usePage().props;
     const [showEditModal, setShowEditModal] = useState(false);
     const [selectedNilai, setSelectedNilai] = useState(null);
     const [showImportModal, setShowImportModal] = useState(false);
     const [filterMapel, setFilterMapel] = useState("");
+    const [searchNama, setSearchNama] = useState("");
 
     const handleEditClick = (nilai) => {
         setSelectedNilai(nilai);
@@ -48,8 +55,16 @@ export default function Nilai({ nilai, meta }) {
             );
         }
 
+        if (searchNama) {
+            filteredData = filteredData.filter((item) =>
+                item.siswa?.nama.toLowerCase().includes(searchNama.toLowerCase())
+            );
+        }
+
+        filteredData.sort((a, b) => b.nilai - a.nilai);
+
         return filteredData;
-    }, [nilai.data, filterMapel]);
+    }, [nilai.data, filterMapel, searchNama]);
 
     const columns = useMemo(() => {
         const cols = [
@@ -68,15 +83,12 @@ export default function Nilai({ nilai, meta }) {
             },
         ];
 
-        if (
-            auth.user &&
-            (auth.user.role === "admin" || auth.user.role === "pengajar")
-        ) {
+        if (auth.user && (auth.user.role === "admin" || auth.user.role === "pengajar")) {
             cols.push({
                 label: "Action",
                 name: "action",
                 renderCell: (row) => (
-                    <>
+                    <div className="flex space-x-2">
                         <button
                             onClick={() => handleEditClick(row)}
                             className="material-icons text-white p-1 rounded-lg bg-blue-500 hover:bg-blue-700"
@@ -89,7 +101,7 @@ export default function Nilai({ nilai, meta }) {
                         >
                             delete
                         </button>
-                    </>
+                    </div>
                 ),
             });
         }
@@ -99,39 +111,83 @@ export default function Nilai({ nilai, meta }) {
 
     return (
         <Layout>
-            <div className="container mx-auto flex justify-between items-center mb-2">
-                <h1 className="font-bold text-2xl text-black">Nilai </h1>
-                <div className="flex items-center space-x-2">
-                    <div>
-                        <select
-                            className="border border-gray-300 rounded-md p-2"
-                            value={filterMapel}
-                            onChange={(e) => setFilterMapel(e.target.value)}
+            <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center mb-2">
+                <h1 className="font-bold text-2xl text-black mb-4 sm:mb-0">Nilai Siswa</h1>
+                <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <input
+                        type="text"
+                        placeholder="Cari Nama Siswa"
+                        className="border border-gray-300 rounded-md p-2 w-full sm:w-auto"
+                        value={searchNama}
+                        onChange={(e) => setSearchNama(e.target.value)}
+                    />
+                    <select
+                        className="border border-gray-300 rounded-md p-2 w-full sm:w-auto"
+                        value={filterMapel}
+                        onChange={(e) => setFilterMapel(e.target.value)}
+                    >
+                        <option value="">Mapel</option>
+                        {uniqueMapels.map((mapel, index) => (
+                            <option key={index} value={mapel}>
+                                {mapel}
+                            </option>
+                        ))}
+                    </select>
+                    {auth.user && (auth.user.role === "admin" || auth.user.role === "pengajar") && (
+                        <Link
+                            className="border bg-green-600 hover:bg-green-700 px-4 py-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm w-full sm:w-auto"
+                            href="/nilai/create"
                         >
-                            <option value="">Mapel</option>
-                            {uniqueMapels.map((mapel, index) => (
-                                <option key={index} value={mapel}>
-                                    {mapel}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    {auth.user &&
-                        (auth.user.role === "admin" ||
-                            auth.user.role === "pengajar") && (
-                            <Link
-                                className="border bg-green-600 hover:bg-green-700 px-4 p-2 rounded-3xl flex items-center space-x-2 text-white shadow-sm"
-                                href="/nilai/create"
-                            >
-                                <span className="material-icons text-lg">
-                                    add
-                                </span>
-                                Nilai
-                            </Link>
-                        )}
+                            <span className="material-icons text-lg">add</span>
+                            Nilai
+                        </Link>
+                    )}
                 </div>
             </div>
-            <Table columns={columns} rows={filteredNilai} />
+
+            {auth.user && auth.user.role === "siswa" ? (
+                <div>
+                    <div className="mb-4 flex flex-wrap justify-start">
+                        <p className="ml-2">
+                            <span className="bg-green-500 p-2 rounded-lg inline-block mr-2"></span>
+                            Nilai diatas KKM
+                        </p>
+                        <p className="ml-2">
+                            <span className="bg-yellow-500 p-2 rounded-lg inline-block mr-2"></span>
+                            Nilai KKM
+                        </p>
+                        <p className="ml-2">
+                            <span className="bg-red-500 p-2 rounded-lg inline-block mr-2"></span>
+                            Nilai dibawah KKM
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {filteredNilai.map((item, index) => (
+                            <div
+                                key={index}
+                                className={`${getCardColor(item.nilai)} p-4 rounded-lg shadow-md text-white`}
+                            >
+                                <h2 className="text-xl font-bold">{item.siswa?.nama || "N/A"}</h2>
+                                <p className="mt-2">
+                                    <span className="font-semibold">Mapel: </span>
+                                    {item.mapel}
+                                </p>
+                                <p className="mt-2">
+                                    <span className="font-semibold">Nilai: </span>
+                                    {item.nilai}
+                                </p>
+                                <p className="mt-2">
+                                    <span className="font-semibold">Tanggal: </span>
+                                    {formatDate(item.created_at)}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ) : (
+                <Table columns={columns} rows={filteredNilai} />
+            )}
+
             <div className="mt-4">
                 <Pagination meta={meta} />
             </div>

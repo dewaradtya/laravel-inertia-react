@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Layout from "../../Layouts/Layout";
 import { Head, useForm } from "@inertiajs/react";
-import { TextInput, FileInput, DropdownInput } from '../../Components/Input/InputForm';
+import { DropdownInput } from '../../Components/Input/InputForm';
 import FormButtons from '../../Components/Button';
 
 export default function CreateJadwal({ siswa }) {
@@ -40,13 +40,20 @@ export default function CreateJadwal({ siswa }) {
                         options={siswa.map(g => ({ value: g.id, label: g.nama }))}
                         placeholder="Pilih Siswa"
                     />
-                    <TextInput
+                    <DropdownInput
                         id="keterangan"
-                        label="keterangan"
+                        label="Keterangan"
                         name="keterangan"
                         value={data.keterangan}
                         onChange={handleChange}
                         error={errors.keterangan}
+                        options={[
+                            { value: "Hadir", label: "Hadir" },
+                            { value: "Sakit", label: "Sakit" },
+                            { value: "Izin", label: "Izin" },
+                            { value: "Absen", label: "Absen" }
+                        ]}
+                        placeholder="Pilih Keterangan"
                     />
                     <FormButtons
                         saveLabel="Simpan"

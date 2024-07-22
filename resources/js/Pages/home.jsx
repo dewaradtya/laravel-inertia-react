@@ -17,8 +17,8 @@ export default function Dashboard() {
         label: 'Daily Visits',
         data: Object.values(visitsData),
         fill: false,
-        backgroundColor: 'rgb(75, 192, 192)',
-        borderColor: 'rgba(75, 192, 192, 0.2)',
+        backgroundColor: 'rgba(153, 70, 113, 0.8)',
+        borderColor: 'rgba(153, 70, 113, 0.8)',
       },
     ],
   };

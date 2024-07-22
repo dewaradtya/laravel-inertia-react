@@ -36,7 +36,12 @@ class PresensiController extends Controller
     public function create()
     {
         $siswa = Siswa::select('id', 'nama')->get();
-        return Inertia::render('Presensi/create', ['siswa' => $siswa]);
+        return Inertia::render('Presensi/create', [
+            'siswa' => $siswa, 
+            'flash' => [
+            'success' => session('success'),
+            'error' => session('error'),
+        ],]);
     }
 
     /**
@@ -51,6 +56,15 @@ class PresensiController extends Controller
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $today = Carbon::today();
+        $alreadyMarked = Presensi::where('siswa_id', $request->siswa_id)
+            ->whereDate('created_at', $today)
+            ->exists();
+
+        if ($alreadyMarked) {
+            return redirect()->back()->with('error', 'Anda sudah melakukan presensi hari ini.');
         }
 
         $data = $request->all();

@@ -7,14 +7,15 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function Dashboard() {
-  const { totalUsers, visitsToday } = usePage().props;
+  const { totalUsers, visitsToday, visitsData } = usePage().props;
 
+  const labels = Object.keys(visitsData);
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels,
     datasets: [
       {
-        label: 'Monthly Revenue',
-        data: [12000, 15000, 13000, 17000, 18000, 20000, 21000],
+        label: 'Daily Visits',
+        data: Object.values(visitsData),
         fill: false,
         backgroundColor: 'rgb(75, 192, 192)',
         borderColor: 'rgba(75, 192, 192, 0.2)',
@@ -53,7 +54,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="bg-white rounded-lg shadow-md p-6 mt-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-4">Monthly Revenue</h2>
+          <h2 className="text-lg font-semibold text-gray-800 mb-4">Daily Visits</h2>
           <Line data={data} options={options} />
         </div>
       </div>

@@ -17,10 +17,22 @@ class PageController extends Controller
         $totalSiswa = User::where('role', 'siswa')->count();
         $totalUsers = $totalPengajar + $totalSiswa;
         $visitsToday = Visit::whereDate('created_at', Carbon::today())->count();
-
+    
+        $visitsByDay = Visit::selectRaw('DAYNAME(created_at) as day, COUNT(*) as count')
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->groupBy('day')
+            ->orderByRaw("FIELD(day, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')")
+            ->get()
+            ->pluck('count', 'day')
+            ->toArray();
+    
+        $daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        $visitsData = array_merge(array_fill_keys($daysOfWeek, 0), $visitsByDay);
+    
         return Inertia::render('home', [
             'totalUsers' => $totalUsers,
             'visitsToday' => $visitsToday,
+            'visitsData' => $visitsData,
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error'),

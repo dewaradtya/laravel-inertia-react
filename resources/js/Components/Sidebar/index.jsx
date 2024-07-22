@@ -116,7 +116,7 @@ export default function Sidebar() {
             </aside>
 
             {/* Bottom bar for small screens */}
-            <nav className="fixed bottom-0 m-2 rounded-full inset-x-0 bg-purple-600 text-white border-t border-purple-200 shadow-lg lg:hidden z-50 flex justify-between items-center p-4">
+            <nav className="fixed bottom-0 m-2 rounded-full inset-x-0 bg-purple-600 text-white border-t border-purple-200 shadow-lg lg:hidden z-50 flex justify-between items-center py-2 px-4">
                 <span className="text-xl font-bold">School Sam</span>
                 <button
                     onClick={() => setIsModalOpen(true)}
